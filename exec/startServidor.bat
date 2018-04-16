@@ -1,0 +1,1 @@
+java -cp SocketClientServer-1.0-SNAPSHOT.jar br.com.unip.redes.objetos.Aplicacao servidor
