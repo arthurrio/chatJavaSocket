@@ -2,37 +2,43 @@ package br.com.unip.redes.objetos;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Aplicacao {
 
-	final static int PORTA_SOCKET = 8080;
 
 	public static void main(String[] args) {
 
+		
 		try {
 			switch (args[0]) {
 			case "servidor":
-				ServerSocket serverSocket = new ServerSocket(PORTA_SOCKET);
-				InetAddress inet = serverSocket.getInetAddress();
-				System.out.println("Servidor localizado no IP: " + inet.getHostAddress() + " na porta : "
-						+ serverSocket.getLocalPort());
+				int op = 99;
+				System.out.println(" ** Inicio de criação do servidor **");
+				Scanner scanOp = new Scanner(System.in);
+				Servidor servidor = new Servidor();
+				System.out.println("Servidor criado!");
 				do {
+					System.out.println("Digite um número para obter informações do servidor.\n 1 - Total de usuarios");
+					op = scanOp.nextInt();
+					switch (op) {
+					case 1:
+						System.out.println("Possui "+ Servidor.countUsuarios+" usuarios connectados.");
+						break;
 
-					System.out.println("Aguardando usuário...");
-					Socket cliente = serverSocket.accept();
-					System.out.println("Usuario connectado !");
-					ClienteServidor clienteServidor = new ClienteServidor(cliente);
-					Thread threadCliente = new Thread(clienteServidor);
-					threadCliente.start();
+					default:
+						System.out.println("Estou funcionando");
+						break;
+					}
+				
 				} while (true);
 
 			case "cliente":
 
 				Socket client = new Socket("127.0.0.1", 8080);
+				new Thread(new ClienteServidorOutPutStream(client, null)).start();
+				
 				PrintStream leitorMsg = new PrintStream(client.getOutputStream());
 				Scanner msg = new Scanner(System.in);
 				do {

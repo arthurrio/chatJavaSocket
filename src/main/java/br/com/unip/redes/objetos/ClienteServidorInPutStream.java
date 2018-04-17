@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClienteServidor implements Runnable{
+public class ClienteServidorInPutStream implements Runnable{
 
 	Socket clientInServer;
 	
@@ -20,6 +20,7 @@ public class ClienteServidor implements Runnable{
 					System.out.println(inPutStreamClient.nextLine());
 				}
 				
+				
 				System.err.println("Desligando servidor ... ");
 				inPutStreamClient.close();
 	            clientInServer.close();
@@ -31,7 +32,7 @@ public class ClienteServidor implements Runnable{
 		} while (true);
 	}
 	
-	public ClienteServidor(Socket cliente) throws IOException {
+	public ClienteServidorInPutStream(Socket cliente) throws IOException {
 		clientInServer = cliente;
 	}
 
