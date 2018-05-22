@@ -28,14 +28,11 @@ public class Servidor {
 		listaNomeClientes = new HashMap<>();
 	}
 	
-	
 	public void adicionaNovoCliente(Socket cliente) throws IOException {
-		
 		Random random = new Random();
 		String usuarioCriado = new Integer(((countUsuarios++)+random.nextInt())).toString();
 		// Adiciona novo cliente e nomeia ele com o número contador.
 		listaNomeClientes.put(cliente,usuarioCriado);
-		
 		listaClientesPrintStream.put(usuarioCriado, new PrintStream(cliente.getOutputStream()));
 		
 	}
@@ -48,12 +45,59 @@ public class Servidor {
 			sender.println(menssage);
 		}
 	}
-
+	
+	public void sendToClient(Socket socket,String mensage) {
+		
+		String nomeCliente = listaNomeClientes.get(socket);
+		sendToClient(nomeCliente, mensage);
+	}
+	
+	public void sendToClient(String clienteDestino,String clienteRemetente,String mensage) {
+		PrintStream sender = listaClientesPrintStream.get(clienteDestino);
+		sender.println(clienteRemetente+" diz: "+mensage);
+	}
+	
+	public void sendToClient(String clienteDestino,String mensage) {
+		PrintStream sender = listaClientesPrintStream.get(clienteDestino);
+		sender.println(mensage);
+	}
+	
 	// Getters and Setters
-
 	public ServidorSocket getServidorSocket() {
 		return servidorSocket;
 	}
 	
+	/**
+	 * Método criado para alterar o nome do usuário no servidor
+	 * @param cliente
+	 * @param nome
+	 */
+	public void mudaNomeCliente(Socket cliente, String nome) {
+		String nomeServidor = listaNomeClientes.get(cliente);
+		listaNomeClientes.put(cliente, nome);
+		PrintStream sender = listaClientesPrintStream.get(nomeServidor);
+		listaClientesPrintStream.put(nome, sender);
+		listaClientesPrintStream.remove(nomeServidor);
+		
+	}
 	
+	public void listaClientes() {
+		int i=1;
+		for(String nome : listaNomeClientes.values()) {
+			System.out.println((i++)+") "+nome);
+		}
+	}
+	public void listaClientes(Socket socket) {
+		String nomeCliente = listaNomeClientes.get(socket);
+		listaClientes(nomeCliente);
+	}
+	public void listaClientes(String nomeCliente) {
+		PrintStream sender = listaClientesPrintStream.get(nomeCliente);
+		int i=1;
+		sender.println( "   .:: Clientes Logados ::.");
+		for(String nome : listaNomeClientes.values()) {
+			sender.println("   "+(i++)+") "+nome);
+		}
+		sender.println( "\n   .:: Fim ::.\n\n");
+	}
 }

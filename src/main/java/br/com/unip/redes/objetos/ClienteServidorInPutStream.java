@@ -10,26 +10,20 @@ public class ClienteServidorInPutStream implements Runnable{
 	
 	@Override
 	public void run() {
-		do {
 			
 			try {
-				System.out.println("Connectou ! ");
 				Scanner inPutStreamClient = new Scanner(clientInServer.getInputStream());
 				
 				while (inPutStreamClient.hasNextLine()) {
 					System.out.println(inPutStreamClient.nextLine());
 				}
 				
-				
-				System.err.println("Desligando servidor ... ");
 				inPutStreamClient.close();
 	            clientInServer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-		} while (true);
 	}
 	
 	public ClienteServidorInPutStream(Socket cliente) throws IOException {
@@ -40,4 +34,7 @@ public class ClienteServidorInPutStream implements Runnable{
 		return clientInServer;
 	}
 	
+	public void menu() {
+		System.out.println("1) Enviar mensagem para todos\n2)Listar todos usuarios\n3)Enviar mensagem para um cliente");
+	}
 }
