@@ -53,7 +53,7 @@ public class ClienteServidorOutPutStream implements Runnable{
 					menu();
 				}
 				
-				System.err.println("Desligando servidor ... ");
+				System.err.println(usuarioLogado+" saiu... ");
 				inPutStreamClient.close();
 	            clientInServer.close();
 			} catch (IOException e) {
