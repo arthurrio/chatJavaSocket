@@ -28,8 +28,7 @@ public class ClienteServidorOutPutStream implements Runnable{
 					String op = inPutStreamClient.nextLine();
 					switch (op){
 					case "1":
-						if(servidor==null)
-							sendClient("Digite uma mensagem para ser enviada para todos: ");
+						sendClient("Digite uma mensagem para ser enviada para todos: ");
 						if(inPutStreamClient.hasNextLine()) {
 								servidor.sendToAll(inPutStreamClient.nextLine());
 						}	

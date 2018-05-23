@@ -37,11 +37,11 @@ public class Aplicacao {
 			case "cliente":
 				Scanner scan = new Scanner(System.in);
 				String ip;
-//				System.out.print("Digite o ip da máquina : "); ip = scan.nextLine();
+				System.out.print("Digite o ip da máquina : "); ip = scan.nextLine();
 //				System.out.print("Digite seu nome : "); nome = scan.nextLine();
 				
 				
-				Socket client = new Socket("127.0.0.1", 8080);
+				Socket client = new Socket(ip, 8080);
 				new Thread(new ClienteServidorInPutStream(client)).start();
 				
 				PrintStream leitorMsg = new PrintStream(client.getOutputStream());
